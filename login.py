@@ -1,7 +1,5 @@
-def login(name):
-    print("Enter username: ")
-    username = input()
-    print("Enter password: ")
-    password = input()
-    print(username)
-    print(password)
+def login(username, password):
+    # login logic
+    
+    return {"username": username, "password": password}
+
