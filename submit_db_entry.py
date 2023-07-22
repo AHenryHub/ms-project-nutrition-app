@@ -1,28 +1,13 @@
-def switch(select_option):
-    if selection == "1":
-        print("Call add service")
-    elif selection == "2":
-        print("Call edit service")
-    elif selection == "3":
-        print("Call delete service")
-    elif selection == "4":
-        print("Call add service")
-    elif selection == "5":
-        print("Call edit service")
-    elif selection == "6":
-        print("Call delete service")
-    else:
-        print("Invalid input.")
+from flask import Flask
+import json
 
-while True:
-    print("Options")
-    print("1. Add ingredient")
-    print("2. Edit ingredient")
-    print("3. Delete ingredient")
-    print("4. Add recipe")
-    print("5. Edit recipe")
-    print("6. Delete recipe")
+def submit(recipe):
+    """takes finished recipe and send it to the db"""
 
-    selection = input()
+    json_obj = json.dumps(recipe, indent=1)
 
-    switch(selection)
+    with open("db.json","w") as outfile:
+        outfile.write(json_obj)
+
+submit({"recipeid":"001","name":"spaghetti","ingredients":{"1":"pasta","2":"sauce","3":"oregano","4":"salt","5":"pepper"},"nutrients":{"calories":350,"protein":20,"carbs":45,"fats":10,"added sugar":3}
+        ,"price":10.00})
