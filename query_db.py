@@ -7,7 +7,6 @@ def query_db(query):
     data = json.load(f)
 
     for i in data:
-        print(i)
         if json.loads(i) == query:
             f.close()
             return data[i]
@@ -15,4 +14,4 @@ def query_db(query):
     f.close()
 
 
-print(query_db(1))
+
