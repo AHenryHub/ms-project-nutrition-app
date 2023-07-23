@@ -4,14 +4,15 @@ import json
 def query_db(query):
     f = open('db.json')
 
-    data = json.loads(f)
+    data = json.load(f)
 
     for i in data:
-        if json.loads(i)["recipeid"] == query:
+        print(i)
+        if json.loads(i) == query:
             f.close()
-            return i
+            return data[i]
 
     f.close()
 
 
-query_db(0)
+print(query_db(1))

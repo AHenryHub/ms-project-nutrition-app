@@ -9,5 +9,8 @@ def submit(recipe):
     with open("db.json","w") as outfile:
         outfile.write(json_obj)
 
-submit({"recipeid":"001","name":"spaghetti","ingredients":{"1":"pasta","2":"sauce","3":"oregano","4":"salt","5":"pepper"},"nutrients":{"calories":350,"protein":20,"carbs":45,"fats":10,"added sugar":3}
-        ,"price":10.00})
+
+
+#test value
+submit({"recipeid":1,"name":"spaghetti","ingredients":{"1":"pasta","2":"sauce","3":"oregano","4":"salt","5":"pepper"},"nutrients":{"calories":350,"protein":20,"carbs":45,"fats":10,"added sugar":3}
+      ,"price":10.00})
