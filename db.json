@@ -68,5 +68,21 @@
    "added sugar": 3
   },
   "price": 1000000.0
+ },
+ "5": {
+  "recipeid": 5,
+  "name": "Bagel",
+  "ingredients": {
+   "1": "Bagel",
+   "2": " Cream Cheese"
+  },
+  "nutrients": {
+   "calories": "250",
+   "protein": "5",
+   "carbs": "20",
+   "fats": "3",
+   "added sugar": "1"
+  },
+  "price": "$4.91"
  }
 }

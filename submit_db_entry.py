@@ -1,17 +1,35 @@
 from flask import Flask
 import json
 
+
 def submit(recipe):
     """takes finished recipe and send it to the db"""
 
     with open("db.json")as infile:
         data = json.load(infile)
 
-    data["4"] = recipe
+    new_key = len(data) + 1
+    recipe["recipeid"] = new_key
+
+
+    data[str(new_key)] = recipe
 
     
     with open("db.json","w") as outfile:
         json.dump(data, outfile, indent=1)
+
+def resubmit(recipe, id):
+    """takes finished recipe and send it to the db"""
+    
+    with open("db.json")as infile:
+        data = json.load(infile)
+
+    data[str(id)] = recipe
+
+    
+    with open("db.json","w") as outfile:
+        json.dump(data, outfile, indent=1)
+
 
 
 #test value

@@ -1,5 +1,6 @@
 from flask import Flask
 import query_db
+import submit_db_entry
 
 def macros(recipeid):
     nutrition_list = {}
@@ -14,12 +15,11 @@ def macros(recipeid):
     added_sugar = input("Enter the amount of added sugar per serving: ")
 
     #lists macro nutrient quantities per serving for an ingredient (macros in grams/serving)
-    nutrition_list = {'calories':calories,'protein':protein,'fats':fats,'carbohydrates':carbohydrates,'added sugar':added_sugar}
+    nutrition_list = {'calories':int(calories),'protein':int(protein),'fats':int(fats),'carbohydrates':int(carbohydrates),'added sugar':int(added_sugar)}
 
-    recipe["nutrients"] = nutrition_list
-
-    print(recipe["nutrients"])
-    
+    #updates the values in db.json
+    recipe["nutrients"] = nutrition_list    
+    submit_db_entry.resubmit(recipe, recipeid)
 
 
 macros(1)
