@@ -62,27 +62,5 @@ class RecipeInput(tk.Tk):
         submit_db_entry.submit(recipe)
 
 
-
-# def builder():
-#     recipe_name = input("What is this recipe called?")
-#     ingredients = {}
-#     more = True
-#     count = 1
-#     while(more == True):
-#         ing = input("What is this ingredient?")
-#         ingredients[count] = ing
-#         choice = input("Add more ingredients? Yes or No")
-#         if choice == "Yes":
-#             more = True
-#         else:
-#             more = False
-
-#     nutrients = nutrition.macros()
-#     price = price_estimate.prices()
-
-#     recipe = {}
-
 app = RecipeInput()
 app.mainloop()
-
-#{"recipeid":4,"name":"egg","ingredients":{"1":"egg"},"nutrients":{"calories":350,"protein":20,"carbs":45,"fats":10,"added sugar":3},"price":1000000.00}

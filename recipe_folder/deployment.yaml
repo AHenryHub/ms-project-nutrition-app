@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nutrition
+spec:
+  selector:
+    matchLabels:
+      app: nutrition
+  replicas: 1
+  template:
+    metadata:
+      name: nutrition
+      labels:
+        app: nutrition
+    spec:
+      containers:
+        - name: nutrition
+          image: nutrition:latest
+          command: [ "python","main.py"]
+          ports:
+            - containerPort: 5003
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 100m
+              memory: 100Mi
+            requests:
+              cpu: 100m
+              memory: 100Mi
+          volumeMounts:
+          - name: recipe-data
+            mountPath: /data/
+          imagePullPolicy: IfNotPresent
+      volumes:
+      - name: recipe-data
+        persistentVolumeClaim:
+          claimName: recipe-data

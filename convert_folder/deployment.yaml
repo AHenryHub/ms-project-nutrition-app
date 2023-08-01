@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: convert
+spec:
+  selector:
+    matchLabels:
+      app: convert
+  replicas: 1
+  template:
+    metadata:
+      name: convert
+      labels:
+        app: convert
+    spec:
+      containers:
+        - name: convert
+          image: convert:latest
+          command: [ "python","main.py"]
+          ports:
+            - containerPort: 5002
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 100m
+              memory: 100Mi
+            requests:
+              cpu: 100m
+              memory: 100Mi
+          imagePullPolicy: IfNotPresent

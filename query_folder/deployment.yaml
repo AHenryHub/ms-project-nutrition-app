@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: query
+spec:
+  selector:
+    matchLabels:
+      app: query
+  replicas: 1
+  template:
+    metadata:
+      name: query
+      labels:
+        app: query
+    spec:
+      containers:
+        - name: query
+          image: query:latest
+          command: [ "python","main.py"]
+          ports:
+            - containerPort: 5007
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 100m
+              memory: 100Mi
+            requests:
+              cpu: 100m
+              memory: 100Mi
+          volumeMounts:
+          - name: recipe-data
+            mountPath: /data/
+          imagePullPolicy: IfNotPresent
+      volumes:
+      - name: recipe-data
+        persistentVolumeClaim:
+          claimName: recipe-data

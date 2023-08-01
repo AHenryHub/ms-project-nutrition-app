@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tax
+spec:
+  selector:
+    matchLabels:
+      app: tax
+  replicas: 1
+  template:
+    metadata:
+      name: tax
+      labels:
+        app: tax
+    spec:
+      containers:
+        - name: tax
+          image: tax:latest
+          command: [ "python","main.py"]
+          ports:
+            - containerPort: 5005
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 100m
+              memory: 100Mi
+            requests:
+              cpu: 100m
+              memory: 100Mi
+          imagePullPolicy: IfNotPresent

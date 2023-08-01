@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: suggest
+spec:
+  selector:
+    matchLabels:
+      app: suggest
+  replicas: 1
+  template:
+    metadata:
+      name: suggest
+      labels:
+        app: suggest
+    spec:
+      containers:
+        - name: suggest
+          image: suggest:latest
+          command: [ "python","main.py"]
+          ports:
+            - containerPort: 5006
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 100m
+              memory: 100Mi
+            requests:
+              cpu: 100m
+              memory: 100Mi
+          volumeMounts:
+          - name: recipe-data
+            mountPath: /data/
+          imagePullPolicy: IfNotPresent
+      volumes:
+      - name: recipe-data
+        persistentVolumeClaim:
+          claimName: recipe-data

@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: price
+spec:
+  selector:
+    matchLabels:
+      app: price
+  replicas: 1
+  template:
+    metadata:
+      name: price
+      labels:
+        app: price
+    spec:
+      containers:
+        - name: price
+          image: price:latest
+          command: [ "python","main.py"]
+          ports:
+            - containerPort: 5004
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 100m
+              memory: 100Mi
+            requests:
+              cpu: 100m
+              memory: 100Mi
+          imagePullPolicy: IfNotPresent

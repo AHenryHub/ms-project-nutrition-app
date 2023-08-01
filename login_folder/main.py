@@ -5,8 +5,6 @@ app = Flask(__name__)
 
 @app.route('/login', methods=['POST'])
 def login_route():
-    
-    #ata = {"username": username, "password": username}
 
     username = request.args.get('username')
     password = request.args.get('password')
@@ -20,4 +18,4 @@ def login(username, password):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True,host='0.0.0.0', port=5000)
