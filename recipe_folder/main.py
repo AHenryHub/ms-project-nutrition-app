@@ -1,66 +1,53 @@
-from flask import Flask
-import tkinter as tk
-from tkinter import messagebox
-import  price_estimate, submit_db_entry
+from flask import Flask, json, request
+import random
 
-
-class RecipeInput(tk.Tk):
-    def __init__(self):
-        super().__init__()
-
-        self.title("Recipe Builder")
-        self.recipeNameVar = tk.StringVar()
-        self.ingredientsVar = tk.StringVar()
-        self.caloriesVar = tk.StringVar()
-        self.proteinVar = tk.StringVar()
-        self.carbsVar = tk.StringVar()
-        self.fatsVar = tk.StringVar()
-        self.sugarVar = tk.StringVar()
-   
-
-        tk.Label(self, text="Recipe Name").grid(row=1, column=0)
-        tk.Entry(self, textvariable=self.recipeNameVar).grid(row=1, column=1)
-
-        tk.Label(self, text="Ingredients (seperate with comma)").grid(row=2, column=0)
-        tk.Entry(self, textvariable=self.ingredientsVar).grid(row=2, column=1)
-
-        tk.Label(self, text="Calories").grid(row=3, column=0)
-        tk.Entry(self, textvariable=self.caloriesVar).grid(row=3, column=1)
-
-        tk.Label(self, text="Protein").grid(row=4, column=0)
-        tk.Entry(self, textvariable=self.proteinVar).grid(row=4, column=1)
-
-        tk.Label(self, text="Carbs").grid(row=5, column=0)
-        tk.Entry(self, textvariable=self.carbsVar).grid(row=5, column=1)
-
-        tk.Label(self, text="Fats").grid(row=6, column=0)
-        tk.Entry(self, textvariable=self.fatsVar).grid(row=6, column=1)
-
-        tk.Label(self, text="Sugar").grid(row=7, column=0)
-        tk.Entry(self, textvariable=self.sugarVar).grid(row=7, column=1)
-
-
-
-        tk.Button(self, text="Submit", command=self.submit).grid(row=9, column=1)
+app = Flask(__name__)
     
-    def submit(self):
-        recipe = {
-            "recipeid": 0,
-            "name": self.recipeNameVar.get(),
-            "ingredients": {str(i+1): ingredient for i, ingredient in enumerate(self.ingredientsVar.get().split(','))},
-            "nutrients": {
-                "calories": self.caloriesVar.get(),
-                "protein": self.proteinVar.get(),
-                "carbs": self.carbsVar.get(),
-                "fats": self.fatsVar.get(),
-                "added sugar": self.sugarVar.get()
-            },
-            "price": price_estimate.prices()
-        }
-
-        messagebox.showinfo("Recipe", recipe)
-        submit_db_entry.submit(recipe)
+@app.route('/recipe', methods=['POST'])
+def recipe_route():
+    recipename = request.args.get('name')
+    ingredients = request.args.get('ingredients')   #comma separated list
+    calories = request.args.get('calories')
+    protein = request.args.get('protein')
+    fats = request.args.get('fat')
+    carbos = request.args.get('carbos')
+    sugar = request.args.get('added sugar')
+    return upload(recipename,ingredients,calories,protein,fats,carbos,sugar), 200
 
 
-app = RecipeInput()
-app.mainloop()
+def upload(recipename,ingredients,calories,protein,fats,carbos,sugar):
+    recipe = {
+        "recipeid": 0,
+        "name": recipename,
+        "ingredients": {str(i+1): ingredient for i, ingredient in enumerate(ingredients.split(','))},
+        "nutrients": {
+            "calories": calories,
+            "protein": protein,
+            "fats": fats,
+            "carbs": carbos,
+            "added sugar": sugar
+        },
+        "price": "$" + str(random.randrange(100,1000,1) / 100.0)     #if we had more time, would figure out post requests, but hard coded for demonstrative purposes
+    }
+    
+    #equivalent function call:
+    #submit_db_entry.submit(recipe)
+
+    with open("/data/db.json")as infile:
+        data = json.load(infile)
+
+    new_key = len(data) + 1
+    recipe["recipeid"] = new_key
+
+
+    data[str(new_key)] = recipe
+
+    
+    with open("/data/db.json","w") as outfile:
+        json.dump(data, outfile, indent=1)
+
+    return "thumbs_up"
+
+
+if __name__ == '__main__':
+    app.run(debug=True,host='0.0.0.0', port=5008)

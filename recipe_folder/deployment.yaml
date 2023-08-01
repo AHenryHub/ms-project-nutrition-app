@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nutrition
+  name: recipe
 spec:
   selector:
     matchLabels:
-      app: nutrition
+      app: recipe
   replicas: 1
   template:
     metadata:
-      name: nutrition
+      name: recipe
       labels:
-        app: nutrition
+        app: recipe
     spec:
       containers:
-        - name: nutrition
-          image: nutrition:latest
+        - name: recipe
+          image: recipe:latest
           command: [ "python","main.py"]
           ports:
-            - containerPort: 5003
+            - containerPort: 5008
               protocol: TCP
           resources:
             limits:

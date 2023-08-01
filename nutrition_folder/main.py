@@ -1,6 +1,4 @@
-from flask import Flask, request, json, Response, jsonify
-import requests
-
+from flask import Flask, request, json
 app = Flask(__name__)
 
 @app.route('/nutrition', methods=['POST'])
