@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: menu
+spec:
+  selector:
+    matchLabels:
+      app: menu
+  replicas: 1
+  template:
+    metadata:
+      name: menu
+      labels:
+        app: menu
+    spec:
+      containers:
+        - name: menu
+          image: menu:latest
+          command: [ "python","main.py"]
+          ports:
+            - containerPort: 5009
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 100m
+              memory: 100Mi
+            requests:
+              cpu: 100m
+              memory: 100Mi
+          imagePullPolicy: IfNotPresent
