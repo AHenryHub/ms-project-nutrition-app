@@ -1,4 +1,4 @@
-from flask import Flask, request, json
+from flask import Flask, request, json, jsonify
 app = Flask(__name__)
 
 @app.route('/nutrition', methods=['POST'])
@@ -25,7 +25,7 @@ def macros(recipeid,calories,protein,fats,carbos,sugar):
     #updates the values in db.json
     recipe["nutrients"] = nutrition_list
 
-    return recipe.json
+    return jsonify(recipe)
 
 
 if __name__ == '__main__':

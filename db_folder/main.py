@@ -18,6 +18,7 @@ def submit(recipe):
     new_key = len(data) + 1
     recipe["recipeid"] = new_key
 
+#    data.pop('None',None)
 
     data[str(new_key)] = recipe
 
